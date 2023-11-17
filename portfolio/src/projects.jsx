@@ -1,4 +1,5 @@
 import './projects.css'
+
 import React from 'react';
 import image1 from './img/lp2.png'
 import jp from'./img/jp.png'

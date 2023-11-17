@@ -11,7 +11,10 @@ function About( { heading, text }){
                     <h1>{heading}</h1>
                     <p>{text}</p>
                 </div>
+
+                
             </div>
+
             <div className="intro">
                 <p>
                     Meet John Mburu, a dedicated and ambitious individual with a passion for technology and software engineering. I began my educational journey at Lenana School, where I laid the foundation for my academic excellence. I later pursued a Bachelor's degree in Information Technology at Mount Kenya University (MKU), showcasing my commitment to gaining a strong educational background.
@@ -26,34 +29,33 @@ function About( { heading, text }){
                 <div className="cv">
                     <h4>You can view my CV down below</h4>
                 <a href={cv} className="btn">Download CV</a>
-                </div>
-            </div>
-            
-            <section >
-            <div className="pricing">
+
+                <div className="pricing">
                 <div className="card-container">
                     <div className="card">
-                    <h3>--BASIC--</h3>
+                    <h3>-BASIC WEB APP-</h3>
                     <span className="bar"></span>
                     <p className="btc">$ 100</p>
                     <p>- 3 days -</p>
-                    <p>- 3pages -</p>
+                    <p>- 3 pages -</p>
                     <p>- Featured - </p>
                     <p>-Responsive Design -</p>
                     <Link to='/Contact Me' className='btn'>PURCHASE NOW</Link>
                     </div>
-
+                </div>
+                <div className="card-container">
                     <div className="card">
-                    <h3>--PREMIUM--</h3>
+                    <h3>-PREMIUM-</h3>
                     <span className="bar"></span>
                     <p className="btc">$ 200</p>
                     <p>- 5 days -</p>
                     <p>- 5 pages -</p>
                     <p>- Featured -</p>
-                    <p>-Responsive Design -</p>
+                    <p>-Responsive Design  -</p>
                     <Link to='/Contact Me' className='btn'>PURCHASE NOW</Link>
                     </div>
-
+                </div>
+                <div className="card-container">
                     <div className="card">
                     <h3>--BUSINESS--</h3>
                     <span className="bar"></span>
@@ -61,11 +63,17 @@ function About( { heading, text }){
                     <p>- 2 weekss -</p>
                     <p>- 8 pages -</p>
                     <p>- Featured -</p>
-                    <p>-Responsive Design -</p>
+                    <p>-Responsive Design + CRUD  -</p>
                     <Link to='/Contact Me' className='btn'>PURCHASE NOW</Link>
                     </div>
                 </div>
             </div>
+
+                </div>
+            </div>
+            
+            <section >
+            
             </section>
             <br />
             <br />
