@@ -11,7 +11,7 @@ function Contact( {heading, text}){
             email:document.getElementById('email').value,
             text:document.getElementById('text').value
         }
-            fetch('http://localhost:8000/posts/',{
+            fetch('http://localhost:8000/api/users/',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',
