@@ -31,9 +31,11 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+        working-directory: ./portfolio/ # <--- ADD THIS LINE
 
       - name: Build
         run: npm run build
+        working-directory: ./portfolio/ # <--- ADD THIS LINE
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -43,7 +45,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
+        # The build output is usually in ./portfolio/build, so we sync from there.
+        # Ensure 'build' folder is inside 'portfolio' after npm run build
         run: |
-          aws s3 sync ./build/ s3://${{ secrets.AWS_S3_BUCKET }} --delete --cache-control max-age=31536000
-          aws s3 cp ./build/index.html s3://${{ secrets.AWS_S3_BUCKET }}/index.html --cache-control no-cache
-          aws s3 cp ./build/asset-manifest.json s3://${{ secrets.AWS_S3_BUCKET }}/asset-manifest.json --cache-control no-cache
+          aws s3 sync ./portfolio/build/ s3://${{ secrets.AWS_S3_BUCKET }} --delete --cache-control max-age=31536000
+          aws s3 cp ./portfolio/build/index.html s3://${{ secrets.AWS_S3_BUCKET }}/index.html --cache-control no-cache
+          aws s3 cp ./portfolio/build/asset-manifest.json s3://${{ secrets.AWS_S3_BUCKET }}/asset-manifest.json --cache-control no-cache
