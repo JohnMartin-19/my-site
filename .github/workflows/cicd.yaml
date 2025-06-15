@@ -44,7 +44,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::740857577909:role/github-workflow
-          aws-region: us-east-1
+          aws-region: eu-north-1
 
       - name: Deploy to S3
         # The build output is usually in ./portfolio/build, so we sync from there.
