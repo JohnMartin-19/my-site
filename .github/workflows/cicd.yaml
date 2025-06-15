@@ -31,23 +31,22 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
-        working-directory: ./portfolio/ # <--- ADD THIS LINE
+        working-directory: ./portfolio/
 
       - name: Build
         run: npm run build
-        working-directory: ./portfolio/ # <--- ADD THIS LINE
+        working-directory: ./portfolio/
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: arn:aws:iam::740857577909:role/github-workflow
+          aws-region: us-east-1
 
       - name: Deploy to S3
         # The build output is usually in ./portfolio/build, so we sync from there.
         # Ensure 'build' folder is inside 'portfolio' after npm run build
         run: |
-          aws s3 sync ./portfolio/build/ s3://${{ secrets.AWS_S3_BUCKET }} --delete --cache-control max-age=31536000
-          aws s3 cp ./portfolio/build/index.html s3://${{ secrets.AWS_S3_BUCKET }}/index.html --cache-control no-cache
-          aws s3 cp ./portfolio/build/asset-manifest.json s3://${{ secrets.AWS_S3_BUCKET }}/asset-manifest.json --cache-control no-cache
+          aws s3 sync ./portfolio/build/ s3://mburu.nkonge --delete --cache-control max-age=31536000 # <--- Changed here
+          aws s3 cp ./portfolio/build/index.html s3://mburu.nkonge/index.html --cache-control no-cache # <--- Changed here
+          aws s3 cp ./portfolio/build/asset-manifest.json s3://mburu.nkonge/asset-manifest.json --cache-control no-cache # <--- Changed here
