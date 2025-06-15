@@ -47,8 +47,7 @@ jobs:
           aws-region: eu-north-1
 
       - name: Deploy to S3
-        # The build output is usually in ./portfolio/build, so we sync from there.
-        # Ensure 'build' folder is inside 'portfolio' after npm run build
+       
         run: |
           aws s3 sync ./portfolio/build/ s3://mburu.nkonge --delete --cache-control max-age=31536000
           aws s3 cp ./portfolio/build/index.html s3://mburu.nkonge/index.html --cache-control no-cache
