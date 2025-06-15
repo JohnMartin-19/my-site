@@ -7,7 +7,10 @@ import affinidi from './img/affinidi.png';
 import epayments from './img/epayments.png'
 import mfarm from './img/m-farm.png'
 import { useState } from 'react';
-
+import cert1 from './img/kube.pdf'; // Replace with your actual cert image paths
+import cert2 from './img/aws1.pdf';
+import cert3 from './img/aws_essentials.pdf';
+import cert4 from './img/devops.pdf'
 
 function App() {
   
@@ -66,6 +69,18 @@ function App() {
     }
   ];
 
+  const certifications = [
+    { id: 1, name: "K8s", image: cert1 },
+    { id: 2, name: "AWS CLOUD PRAC", image: cert2 },
+    { id: 3, name: "AWS ESSENTIALS", image: cert3 },
+    { id: 4, name: "AWS DEVOPS", image: cert4 },
+    // Add more certifications as needed
+    // It's good to duplicate them if you have less than 4-5 to ensure continuous loop
+    // { id: 4, name: "AWS Certified Cloud Practitioner (Duplicate)", image: cert1 },
+    // { id: 5, name: "Microsoft Certified Azure Fundamentals (Duplicate)", image: cert2 },
+    // { id: 6, name: "Google Cloud Digital Leader (Duplicate)", image: cert3 },
+  ];
+
   const [selectedExperience, setSelectedExperience] = useState(null);
 
  
@@ -75,7 +90,7 @@ function App() {
       project: "M-FARM Agricultural MarketPlace",
       techStack: "ReactJS, Django, Django REST Framework, PostgreSQL, Docker,Kubernetes, Github, Redis",
       details: [
-        "Service Discovery: In a microservice architecture, the 3 backend apps need to communicate with one another for various services to run smoothly. I am planning to use Service Mesh in Kubernets.",
+        "Service Discovery: In a microservice architecture, the 3 backend apps need to communicate with one another for various services to run smoothly. I am planning to use Service Mesh in Kubernetes.",
         "Inter-service Communication: Using token-based, internal-only API auth to secure interservice communication betweeen the backend servies.",
         "Security: I am leveraging JWT Tokens for the authentication of users. I use Redis for caching the logged in user-data/payload to refenece it and shared across the 3 applications without duplicating the data in the db. Helps to maintain ACID properties.",
         "Database Modelling and Normalization: Thos being a microservice applucation, I design, modelled and normalized 3 databases designs for the application servicaes(product-service, user-service and payment-service).",
@@ -151,11 +166,11 @@ function App() {
     <div className="App">
       <nav id="navbar">
         <ul>
-          <li><a href="#home">Mburu</a></li>
+          <li><a href="#home">MBURU</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#tech-stacks">Tech</a></li>
           <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#footer">Contact</a></li>
         </ul>
       </nav>
 
@@ -171,7 +186,7 @@ function App() {
             <p>HELLO THERE, I AM</p>
             <h1>JOHN MBURU</h1>
             <p className="subheading">
-              Full-stack developer creating innovative web solutions with modern technologies.
+              A Full-stack developer creating innovative web solutions with modern technologies.
             </p>
             <a href="https://github.com/JohnMartin-19/" style={{fontSize:'40px'}}>
             <motion.i 
@@ -234,19 +249,20 @@ function App() {
         <div className="card content-container">
           <h2>About Me</h2>
           <p>
-            I'm a passionate software developer with expertise in building responsive web applications 
-            using React, Python, and Django. I love creating clean, efficient code and beautiful user 
-            interfaces.
-          </p>
-          <p>
-          With over a year of professional experience at a FinTech company and four years of freelance work during university, 
-          I have developed a strong foundation in full-stack development. My recent role as a Software Developer involved working
-           on a County e-Revenue Management System, where I leveraged skills in Django, Django REST Framework, and PostgreSQL,
-            alongside frontend technologies like HTML5, CSS3, and JavaScript. I've contributed to unit testing, debugging, database design,
-             API development, UI enhancements, and system optimization using tools like Docker and GitLab. As an intern, 
-             I gained initial exposure to Python and Django, while my freelance experience included building client websites,
-              mentoring peers, and exploring technologies through the Google Developer Students Club. This diverse background 
-              has equipped me with both technical expertise and collaborative skills in agile environments.
+          As a dedicated Full-stack Software Developer, I bring a year and a half of intensive professional experience from a FinTech environment,
+           bolstered by over 3 years of diverse freelance projects. I specialize in building highly functional and scalable web applications,
+            adept at both intricate backend logic and dynamic frontend interfaces.
+          <br/>
+          My recent flagship project involves leading the development and deployment of a microservice-based agricultural marketplace (M-FARM) on AWS.
+           This has sharpened my skills in designing loosely coupled services with Django and Django REST Framework, implementing container orchestration with Kubernetes,
+          and automating infrastructure provisioning using Terraform. I've established robust CI/CD pipelines with GitHub Actions, ensuring seamless, automated deployments
+          , allowing me to demonstrate my commitment to efficient, modern DevOps practices.
+          <br/>
+          Prior to this, my contributions to a multi-tenant County e-Revenue Management System involved end-to-end API development, database modeling and normalization with PostgreSQL,
+          unit testing, and performance optimization. My foundational experience in Python, Django, ReactJS, HTML5, CSS3, and JavaScript, coupled with practical use of Docker and GitLab,
+          enables me to deliver comprehensive solutions from concept to deployment. I am a collaborative problem-solver, committed to best practices in agile development and continuous learning within the cloud ecosystem.
+          My diverse background, from early Python/Django internship to mentoring peers, has cultivated a blend of technical depth and collaborative agility,
+          positioning me to excel in cloud-native environments.
 
           </p>
         </div>
@@ -312,7 +328,7 @@ function App() {
               <span>Python</span>
             </motion.div>
             <motion.div variants={cardVariants} className="tech-card">
-              <i className="bi bi-code-slash"></i>
+              <i className="fa fa-code"></i>
               <span>Django</span>
             </motion.div>
             <motion.div variants={cardVariants} className="tech-card">
@@ -320,7 +336,7 @@ function App() {
               <span>Docker</span>
             </motion.div>
             <motion.div variants={cardVariants} className="tech-card">
-              <i className="bi bi-cloud"></i>
+              <i className="fa fa-cloud"></i>
               <span>AWS</span>
             </motion.div>
             <motion.div variants={cardVariants} className="tech-card">
@@ -361,63 +377,84 @@ function App() {
         </div>
       </motion.section>
 
-      <motion.section 
-        id="contact" 
-        className="section"
+      <motion.section
+        id="certifications" // Changed ID from 'contact'
+        className="section certifications-section" // Add a new class for styling
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
         <div className="content-container">
-          <h2>Contact Me</h2>
-          <form>
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Your Email" required />
-            <textarea placeholder="Your Message" required></textarea>
-            <motion.button
-            className='btn-primary' 
-              type="submit"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <h2>My Certifications</h2>
+          {/* Main carousel container */}
+          <div className="carousel-container">
+            {/* Inner carousel track that will move */}
+            <motion.div
+              className="carousel-track"
+              animate={{
+                x: ['0%', '-100%'], // Animate from 0% to -100% of its width
+                transition: {
+                  x: {
+                    repeat: Infinity, // Loop indefinitely
+                    repeatType: 'loop',
+                    duration: 25, // Adjust duration for desired speed
+                    ease: 'linear', // Consistent speed
+                  },
+                },
+              }}
             >
-              Send Message
-            </motion.button>
-          </form>
+              {certifications.map((cert) => (
+                <div key={cert.id} className="certification-item">
+                  <img src={cert.image} alt={cert.name} />
+                  {/* You can add a title overlay if needed */}
+                  {/* <p>{cert.name}</p> */}
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </motion.section>
 
-      <footer class="footer">
+
+      <footer class="footer" id='footer'>
         <div class="footer-container">
             <div class="footer-column">
                 <h3>Follow Me</h3>
                 <ul class="social-media">
-                    <li><a href="#" className='fa-brands fa-facebook'></a></li>
-                    <li><a href="#" className='fa-brands fa-twitter'></a></li>
-                    <li><a href="#" className='fa-brands fa-instagram'></a></li>
-                    <li><a href="#" className='fa-brands fa-youtube'>
-                      </a></li>
+                    <li>
+                        <a href="https://www.facebook.com/your-profile" target="_blank" rel="noopener noreferrer" className='fa-brands fa-facebook' aria-label="Visit my Facebook profile"></a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/your-profile" target="_blank" rel="noopener noreferrer" className='fa-brands fa-twitter' aria-label="Visit my Twitter profile"></a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/your-profile" target="_blank" rel="noopener noreferrer" className='fa-brands fa-instagram' aria-label="Visit my Instagram profile"></a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/your-channel" target="_blank" rel="noopener noreferrer" className='fa-brands fa-youtube' aria-label="Visit my YouTube channel"></a>
+                    </li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Contact </h3>
                 <ul>
-                    <li>Email: johnnkonge2020@gmail.com</li>
-                    <li>Phone: +254768171426</li>
-                    <li>Address: Gilgil,Nakuru City, Kenya</li>
+                    <li> johnnkonge2020@gmail.com</li>
+                    <li> +254768171426</li>
+                    <li> Nairobi, Kenya</li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
+    <li><a href="#projects">Projects</a></li>
+    {/* <li><button>Blog</button></li>
+    <li><button>FAQs</button></li>
+    <li><button>Privacy Policy</button></li> */}
+</ul>
             </div>
             <div class="footer-column">
                 <h3>About Me</h3>
-                <p>I am a passionate Software Developer who has so much enthusiasism and zeal about cloud technologies and cloud-computing. I the near future, I would aspire to be a Cloud Architect.</p>
+                <p>I am a passionate Software Developer who has so much enthusiasism and zeal about cloud technologies and cloud-computing. In the near future, I would aspire to be a Cloud Solutions Architect.</p>
             </div>
         </div>
         <div class="bottom">
