@@ -7,7 +7,7 @@ import affinidi from './img/affinidi.png';
 import epayments from './img/epayments.png'
 import mfarm from './img/m-farm.png'
 import { useState } from 'react';
-import cert1 from './img/kube.pdf'; // Replace with your actual cert image paths
+import cert1 from './img/kube.pdf'; 
 import cert2 from './img/aws1.pdf';
 import cert3 from './img/aws_essentials.pdf';
 import cert4 from './img/devops.pdf'
