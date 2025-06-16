@@ -7,10 +7,10 @@ import affinidi from './img/affinidi.png';
 import epayments from './img/epayments.png'
 import mfarm from './img/m-farm.png'
 import { useState } from 'react';
-import cert1 from './img/kube.pdf'; 
-import cert2 from './img/aws1.pdf';
-import cert3 from './img/aws_essentials.pdf';
-import cert4 from './img/devops.pdf'
+import cert1 from './img/kube.png'; 
+import cert2 from './img/cloud_prac.png';
+import cert3 from './img/tech_essentials.png';
+import cert4 from './img/devops.png'
 
 function App() {
   
@@ -392,7 +392,7 @@ function App() {
             <motion.div
               className="carousel-track"
               animate={{
-                x: ['0%', '-100%'], // Animate from 0% to -100% of its width
+                x: ['100%', '-100%'], // Animate from 0% to -100% of its width
                 transition: {
                   x: {
                     repeat: Infinity, // Loop indefinitely
