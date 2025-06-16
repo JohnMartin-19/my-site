@@ -75,10 +75,11 @@ function App() {
     { id: 3, name: "AWS ESSENTIALS", image: cert3 },
     { id: 4, name: "AWS DEVOPS", image: cert4 },
     // Add more certifications as needed
-    // It's good to duplicate them if you have less than 4-5 to ensure continuous loop
-    // { id: 4, name: "AWS Certified Cloud Practitioner (Duplicate)", image: cert1 },
-    // { id: 5, name: "Microsoft Certified Azure Fundamentals (Duplicate)", image: cert2 },
-    // { id: 6, name: "Google Cloud Digital Leader (Duplicate)", image: cert3 },
+    // // It's good to duplicate them if you have less than 4-5 to ensure continuous loop
+    // { id: 5, name: "K8s", image: cert1 },
+    // { id: 6, name: "AWS CLOUD PRAC", image: cert2 },
+    // { id: 7, name: "AWS ESSENTIALS", image: cert3 },
+    // { id: 8, name: "AWS DEVOPS", image: cert4 },
   ];
 
   const [selectedExperience, setSelectedExperience] = useState(null);
@@ -397,7 +398,7 @@ function App() {
                   x: {
                     repeat: Infinity, // Loop indefinitely
                     repeatType: 'loop',
-                    duration: 25, // Adjust duration for desired speed
+                    duration: 35, // Adjust duration for desired speed
                     ease: 'linear', // Consistent speed
                   },
                 },
@@ -421,18 +422,18 @@ function App() {
             <div class="footer-column">
                 <h3>Follow Me</h3>
                 <ul class="social-media">
-                    <li>
+                    {/* <li>
                         <a href="https://www.facebook.com/your-profile" target="_blank" rel="noopener noreferrer" className='fa-brands fa-facebook' aria-label="Visit my Facebook profile"></a>
-                    </li>
+                    </li> */}
                     <li>
                         <a href="https://twitter.com/your-profile" target="_blank" rel="noopener noreferrer" className='fa-brands fa-twitter' aria-label="Visit my Twitter profile"></a>
                     </li>
                     <li>
                         <a href="https://www.instagram.com/your-profile" target="_blank" rel="noopener noreferrer" className='fa-brands fa-instagram' aria-label="Visit my Instagram profile"></a>
                     </li>
-                    <li>
+                    {/* <li>
                         <a href="https://www.youtube.com/your-channel" target="_blank" rel="noopener noreferrer" className='fa-brands fa-youtube' aria-label="Visit my YouTube channel"></a>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
             <div class="footer-column">
