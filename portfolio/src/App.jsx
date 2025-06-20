@@ -12,6 +12,7 @@ import cert2 from './img/cloud_prac.png';
 import cert3 from './img/tech_essentials.png';
 import cert4 from './img/devops.png'
 
+
 function App() {
   
 
@@ -343,6 +344,23 @@ function App() {
             <motion.div variants={cardVariants} className="tech-card">
               <i className="fa-brands fa-gitlab"></i>
               <span>Gitlab</span>
+            </motion.div>
+            {/* New Tech Stacks Added Below */}
+            <motion.div variants={cardVariants} className="tech-card">
+              <i className="fa-solid fa-laptop-code"></i> 
+              <span>Terraform</span>
+            </motion.div>
+            <motion.div variants={cardVariants} className="tech-card">
+              <i className="fa-solid fa-dharmachakra"></i> {/* Common Kubernetes icon */}
+              <span>Kubernetes</span>
+            </motion.div>
+            <motion.div variants={cardVariants} className="tech-card">
+              <i className="fa-solid fa-database"></i> {/* Database icon, suitable for PostgreSQL */}
+              <span>PostgreSQL</span>
+            </motion.div>
+            <motion.div variants={cardVariants} className="tech-card">
+              <i className="fa-solid fa-fire"></i> {/* Represents speed/caching, suitable for Redis */}
+              <span>Redis</span>
             </motion.div>
           </div>
         </div>
