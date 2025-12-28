@@ -1,514 +1,432 @@
-/* General Body and App Styles */
-body {
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll bar on the body */
-}
+/* Landing Page Styles */
 
-.App {
-  font-family: Montserrat, sans-serif;
-  line-height: 1.6;
-}
-
-/* Navbar Styles */
-#navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #333;
-  padding: 1rem;
-  z-index: 1000;
-  box-sizing: border-box; /* Ensure padding doesn't add to width */
-}
-
-#navbar ul {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-#navbar a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.1rem;
-}
-
-/* Section Styles */
-.section {
-  padding: 4rem 0;
-  min-height: calc(30vh - 30px); /* Adjust based on navbar height */
-  margin-top: 50px; /* Offset for fixed navbar */
-  box-sizing: border-box; /* Ensure padding doesn't add to width */
-}
-
-.content-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  box-sizing: border-box; /* Ensure padding doesn't add to width */
-}
-
-/* Text Content Styles */
-.text-content h1 {
-  font-size: 3rem;
-  margin: 1rem 0;
-}
-
-.subheading {
-  max-width: 600px;
-  margin-bottom: 2rem;
-}
-
-/* Button Styles */
-.btn-primary {
-  padding: 0.8rem 2rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-/* Services Section Styles */
-.services {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
-  padding: 0 1rem; /* Adjust via media query below */
-  box-sizing: border-box;
-}
-
-.service-card {
-  text-align: center;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  min-width: 120px; /* Adjusted via media query below */
-  flex: 1 1 150px;
-  max-width: 200px; /* Adjusted via media query below */
-}
-
-.service-card i {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.service-card p {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
-/* Card General Styles */
-.card {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 20px auto;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 1200px;
-  box-sizing: border-box; /* Ensure padding doesn't add to width */
-}
-
-/* Experience Grid Styles */
-.experience-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted via media query below */
-  gap: 2rem;
-  margin-top: 1rem;
-  width: 100%;
-}
-
-.experience-card {
-  background: white;
-  border-radius: 8px;
-  padding: 15px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.experience-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  background-color: grey;
-  color: white;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  box-sizing: border-box; /* Ensure padding doesn't add to width */
-}
-
-.modal-content h3 {
-  margin-top: 0;
-}
-
-.modal-content ul {
-  padding-left: 20px;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #333;
-}
-
-.close-button:hover {
-  color: #007bff;
-}
-
-/* Certifications Section Styling */
-.certifications-section {
-  padding: 50px 0;
-  background-color: #f8f8f8; /* Light background for the section */
-  overflow: hidden; /* Hide overflowing content for the carousel */
-}
-
-.certifications-section h2 {
-  text-align: center;
-  margin-bottom: 40px;
-  font-size: 2.5em;
-  color: #333;
-}
-
-/* Carousel Container */
-.carousel-container {
-  width: 100%;
-  overflow: hidden; /* Hides content outside the container */
-  white-space: nowrap; /* Ensures all items stay on one line */
-  position: relative;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  padding: 20px 0; /* Add some vertical padding */
-}
-
-/* Carousel Track */
-.carousel-track {
-  display: flex; /* Arranges items in a row */
-  width: fit-content; /* Allows content to define its width, crucial for infinite scroll */
-  will-change: transform; /* Optimizes animation performance */
-}
-
-/* Individual Certification Card */
-.certification-item {
-  flex: 0 0 auto; /* Prevent items from shrinking or growing, maintain their size */
-  width: 300px; /* Fixed width for each card, adjust as needed */
-  margin: 0 15px; /* Spacing between cards */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+.landing-container {
+  min-height: 100vh;
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.3s ease;
 }
 
-.certification-item:hover {
-  transform: translateY(-5px); /* Slight lift effect on hover */
-}
-
-.certification-item img {
-  max-width: 100%; /* Ensure images fit within their containers */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 8px; /* Slightly rounded corners for images */
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-}
-
-.certification-item p {
-  font-size: 1.1em;
-  font-weight: bold;
-  color: #555;
-}
-
-/* General H2 Styles */
-h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-/* Tech Grid Styles */
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Adjusted via media query below */
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.tech-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 8px;
-}
-
-.tech-card i {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Projects Grid Styles */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted via media query below */
-  gap: 2rem;
-  margin-top: 1rem;
-}
-
-.project-card {
-  background: white;
-  border-radius: 8px;
+.hero-section {
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.project-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+/* Decorative Background Elements */
+.background-decorations {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
 }
 
-.project-info {
-  padding: 1rem;
+.bg-blob-1 {
+  position: absolute;
+  top: 5rem;
+  left: 2.5rem;
+  width: 8rem;
+  height: 8rem;
+  background-color: #22c55e;
+  border-radius: 9999px;
+  filter: blur(48px);
 }
 
-.project-link {
-  display: inline-block;
-  margin-top: 1rem;
-  color: #007bff;
-  text-decoration: none;
+.bg-blob-2 {
+  position: absolute;
+  bottom: 5rem;
+  right: 2.5rem;
+  width: 10rem;
+  height: 10rem;
+  background-color: #16a34a;
+  border-radius: 9999px;
+  filter: blur(48px);
 }
 
-/* Form Styles */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 500px;
+.bg-blob-3 {
+  position: absolute;
+  top: 50%;
+  left: 33.333%;
+  width: 6rem;
+  height: 6rem;
+  background-color: #4ade80;
+  border-radius: 9999px;
+  filter: blur(32px);
+}
+
+/* Main Content */
+.main-content {
+  position: relative;
+  max-width: 72rem;
   margin: 0 auto;
+  padding: 4rem 1rem;
 }
 
-input, textarea {
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+@media (min-width: 640px) {
+  .main-content {
+    padding: 6rem 1.5rem;
+  }
 }
 
-textarea {
-  min-height: 150px;
+@media (min-width: 1024px) {
+  .main-content {
+    padding: 8rem 2rem;
+  }
 }
 
-/* Footer Styles */
-.footer {
-  background-color: #1a1a1a;
-  color: #fff;
-  padding: 3rem 0;
+.content-wrapper {
+  text-align: center;
 }
-.footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  box-sizing: border-box; /* Ensure padding doesn't add to width */
-}
-.footer-column {
-  flex: 1;
-  min-width: 200px; /* Adjusted via media query below */
+
+/* Logo/Brand */
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #f0fdf4;
+  border-radius: 9999px;
+  border: 2px solid #bbf7d0;
   margin-bottom: 2rem;
 }
-.footer-column h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-.footer-column ul {
-  list-style: none;
-  padding: 0;
-}
-.footer-column ul li {
-  margin-bottom: 0.5rem;
-}
-.footer-column ul li a {
-  color: #ccc;
-  text-decoration: none;
-  font-size: 20px;
-  transition: color 0.3s ease;
-}
-.footer-column ul li a:hover {
-  color: #007bff;
-}
-.bottom {
-  text-align: center;
-  padding-top: 2rem;
-  border-top: 1px solid #333;
-  margin-top: 2rem;
-}
-.bottom p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #ccc;
+
+.brand-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #16a34a;
 }
 
-/* --- Media Queries for Mobile Responsiveness (Consolidated & Enhanced) --- */
+.brand-text {
+  color: #15803d;
+}
 
-@media (max-width: 768px) {
-  /* General mobile adjustments */
-  .section {
-    padding: 2rem 0; /* Reduce vertical padding */
-  }
+/* Headings */
+.main-heading {
+  font-size: 2.25rem;
+  color: #15803d;
+  margin: 2rem 0 1rem 0;
+}
 
-  .content-container {
-    padding: 0 1rem; /* Reduce horizontal padding */
-  }
-
-  .text-content h1 {
-    font-size: 2.5rem; /* Smaller heading on mobile */
-  }
-
-  h2 {
-    font-size: 2rem; /* Smaller section headings */
-  }
-
-  /* Services section */
-  .services {
-    flex-direction: column; /* Stack cards vertically */
-    align-items: center;
-    gap: 1.5rem; /* Slightly reduced gap */
-    padding: 0 0.5rem; /* More horizontal padding reduction for services */
-  }
-
-  .service-card {
-    max-width: 300px;
-    width: 100%;
-    min-width: unset; /* Allow cards to shrink freely */
-  }
-
-  /* Experience Grid */
-  .experience-grid {
-    grid-template-columns: 1fr; /* Single column */
-    gap: 1.5rem;
-  }
-
-  /* Modal */
-  .modal-content {
-    margin: 0 1rem; /* Adjust margin to ensure it fits viewport */
-    width: calc(100% - 2rem); /* Full width minus margin */
-  }
-
-  /* Certifications Carousel */
-  .certification-item {
-    width: 250px; /* Smaller width for tablets */
-    margin: 0 10px;
-  }
-
-  /* Projects Grid */
-  .projects-grid {
-    grid-template-columns: 1fr; /* Single column */
-    gap: 1.5rem;
-  }
-
-  /* Footer */
-  .footer-container {
-    flex-direction: column; /* Stack footer columns */
-    align-items: center;
-    text-align: center;
-  }
-  .footer-column {
-    min-width: unset; /* Allow shrinking */
-    width: 100%; /* Take full width */
-  }
-  .footer-column ul {
-    margin-bottom: 1rem; /* Add space between stacked lists */
-  }
-  .social-media {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+@media (min-width: 640px) {
+  .main-heading {
+    font-size: 3rem;
   }
 }
 
-@media (max-width: 480px) {
-  /* Even smaller screen adjustments */
-  #navbar ul {
-    gap: 1rem; /* Smaller gap in navbar */
+@media (min-width: 1024px) {
+  .main-heading {
+    font-size: 4.5rem;
   }
-  #navbar a {
-    font-size: 1rem; /* Smaller navbar links */
-  }
+}
 
-  .text-content h1 {
-    font-size: 2rem; /* Even smaller heading */
-  }
+.christmas-heading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1rem 0 2rem 0;
+}
 
-  h2 {
-    font-size: 1.8rem;
-  }
+.christmas-heading {
+  font-size: 1.875rem;
+  color: #166534;
+}
 
-  .service-card {
-    padding: 0.8rem;
+@media (min-width: 640px) {
+  .christmas-heading {
+    font-size: 2.25rem;
   }
-  .service-card i {
+}
+
+@media (min-width: 1024px) {
+  .christmas-heading {
+    font-size: 3rem;
+  }
+}
+
+.emoji-large {
+  font-size: 3.75rem;
+}
+
+@media (min-width: 640px) {
+  .emoji-large {
+    font-size: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .emoji-large {
+    font-size: 6rem;
+  }
+}
+
+/* Image Container */
+.image-container {
+  max-width: 48rem;
+  margin: 3rem auto;
+}
+
+.image-wrapper {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 4px solid #dcfce7;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 83, 45, 0.2), transparent);
+}
+
+/* Message Sections */
+.message-section {
+  max-width: 42rem;
+  margin: 2rem auto;
+}
+
+.main-message {
+  font-size: 1.25rem;
+  color: #374151;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .main-message {
     font-size: 1.5rem;
   }
-  .service-card p {
-    font-size: 0.9rem;
-  }
+}
 
-  .tech-grid {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Allow tech cards to be even smaller */
-    gap: 0.5rem;
+@media (min-width: 1024px) {
+  .main-message {
+    font-size: 1.875rem;
   }
+}
 
-  .carousel-container {
-    height: 30vh; /* Make carousel slightly shorter on very small screens */
+.sub-message {
+  font-size: 1.125rem;
+  color: #4b5563;
+}
+
+@media (min-width: 640px) {
+  .sub-message {
+    font-size: 1.25rem;
   }
-  .certification-item {
-    width: 200px; /* Even smaller width for mobile */
-    margin: 0 8px;
+}
+
+/* Announcement Card */
+.announcement-wrapper {
+  max-width: 42rem;
+  margin: 3rem auto 0;
+}
+
+.announcement-card {
+  position: relative;
+  background: linear-gradient(to bottom right, #166534, #15803d);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 640px) {
+  .announcement-card {
+    padding: 3rem;
   }
+}
+
+.corner-decoration-1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8rem;
+  height: 8rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-bottom-left-radius: 9999px;
+}
+
+.corner-decoration-2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 8rem;
+  height: 8rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-top-right-radius: 9999px;
+}
+
+.announcement-content {
+  position: relative;
+  color: white;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.icon-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 9999px;
+  padding: 1rem;
+}
+
+.gift-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.announcement-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .announcement-title {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .announcement-title {
+    font-size: 2.25rem;
+  }
+}
+
+.date-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.date-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.calendar-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.date-text {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .date-text {
+    font-size: 1.5rem;
+  }
+}
+
+.launch-text {
+  font-size: 1.125rem;
+}
+
+@media (min-width: 640px) {
+  .launch-text {
+    font-size: 1.25rem;
+  }
+}
+
+.announcement-description {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Closing Message */
+.closing-section {
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.closing-title {
+  font-size: 1.25rem;
+  color: #15803d;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .closing-title {
+    font-size: 1.5rem;
+  }
+}
+
+.closing-text {
+  font-size: 1.125rem;
+  color: #4b5563;
+}
+
+/* Floating Decorations */
+.floating-decorations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-sparkle {
+  position: absolute;
+  color: #86efac;
+  opacity: 0.3;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+.animate-float {
+  animation: float linear infinite;
+}
+
+/* Footer */
+.footer {
+  background-color: #166534;
+  color: white;
+  padding: 2rem 0;
+}
+
+.footer-content {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .footer-content {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-content {
+    padding: 0 2rem;
+  }
+}
+
+.footer-copyright {
+  color: #d1fae5;
+}
+
+.footer-tagline {
+  font-size: 0.875rem;
+  color: #bbf7d0;
+  margin-top: 0.5rem;
 }
