@@ -4,6 +4,7 @@ import imgAdobeExpressFile31 from "./img/mburu.jpeg";
 
 function Navigation() {
   const [activeSection, setActiveSection] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
     { id: 'home', label: 'Home' },
@@ -19,6 +20,7 @@ function Navigation() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
+      setMobileMenuOpen(false);
     }
   };
 
@@ -32,7 +34,7 @@ function Navigation() {
         if (element) {
           const offsetTop = element.offsetTop;
           const height = element.offsetHeight;
-          
+
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
             setActiveSection(sectionId);
             break;
@@ -47,14 +49,15 @@ function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#1f1f1f]/90 backdrop-blur-sm border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-12">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-8 xl:gap-12">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`font-['Poppins:Regular',_sans-serif] text-[18px] transition-colors duration-200 ${
+                className={`font-['Poppins:Regular',_sans-serif] text-base sm:text-lg transition-colors duration-200 ${
                   activeSection === item.id ? 'text-[#f8f7f9]' : 'text-[#f8f7f9]/70 hover:text-[#f8f7f9]'
                 }`}
               >
@@ -62,15 +65,61 @@ function Navigation() {
               </button>
             ))}
           </div>
-          
-          <div className="flex items-center gap-6">
+
+          {/* Logo/Name for Mobile */}
+          <div className="lg:hidden font-['Poppins:Bold',_sans-serif] text-lg text-[#f8f7f9]">
+            John Mburu
+          </div>
+
+          {/* Desktop Social Icons */}
+          <div className="hidden lg:flex items-center gap-6">
             <div className="h-11 w-px bg-[#f8f7f9]" />
             <div className="flex gap-6">
               <SocialIcon type="github" href="https://github.com/JohnMartin-19/" />
               <SocialIcon type="linkedin" href="https://www.linkedin.com/in/john-m-015922206/" />
             </div>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 text-[#f8f7f9]"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mt-4 pb-4 border-t border-white/10 pt-4">
+            <div className="flex flex-col space-y-4">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`font-['Poppins:Regular',_sans-serif] text-base text-left transition-colors duration-200 ${
+                    activeSection === item.id ? 'text-[#f8f7f9]' : 'text-[#f8f7f9]/70'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+              <div className="flex gap-6 pt-4 border-t border-white/10">
+                <SocialIcon type="github" href="https://github.com/JohnMartin-19/" />
+                <SocialIcon type="linkedin" href="https://www.linkedin.com/in/john-m-015922206/" />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
@@ -123,10 +172,10 @@ function HeroSection() {
   };
 
   return (
-    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden">
+    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden pt-20 sm:pt-24">
       {/* Background blur effect */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[905px] h-[897px]">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] lg:w-[905px] lg:h-[897px]">
           <div className="absolute inset-0 opacity-10">
             <svg className="w-full h-full" viewBox="0 0 1417 1409">
               <defs>
@@ -147,32 +196,32 @@ function HeroSection() {
         </div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center py-8">
         {/* Left content */}
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <h2 className="font-['Poppins:Bold',_sans-serif] text-[24px] text-[#f8f7f9]">
+        <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="font-['Poppins:Bold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[#f8f7f9]">
               HI, I'M JOHN MBURU
             </h2>
-            <h1 className="font-['Poppins:Bold',_sans-serif] text-[64px] lg:text-[96px] leading-[0.9] text-[#f8f7f9]">
+            <h1 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] leading-[0.9] text-[#f8f7f9]">
               FULLSTACK<br />ENGINEER
             </h1>
           </div>
-          
-          <button 
+
+          <button
             onClick={scrollToProjects}
-            className="group border-2 border-[#f8f7f9] px-8 py-4 rounded-2xl transition-all duration-300 hover:bg-[#f8f7f9] hover:text-[#1f1f1f]"
+            className="group border-2 border-[#f8f7f9] px-6 py-3 sm:px-8 sm:py-4 rounded-2xl transition-all duration-300 hover:bg-[#f8f7f9] hover:text-[#1f1f1f]"
           >
-            <span className="font-['Poppins:Bold',_sans-serif] text-[24px] text-[#f8f7f9] group-hover:text-[#1f1f1f] transition-colors duration-300">
+            <span className="font-['Poppins:Bold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[#f8f7f9] group-hover:text-[#1f1f1f] transition-colors duration-300">
               VIEW MY PROJECTS
             </span>
           </button>
         </div>
 
         {/* Right content - Profile image */}
-        <div className="relative">
+        <div className="relative order-1 lg:order-2">
           <div
-            className="w-full h-[400px] lg:h-[600px] bg-cover bg-center bg-no-repeat rounded-lg"
+            className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] bg-cover bg-center bg-no-repeat rounded-lg"
             style={{ backgroundImage: `url('${imgAdobeExpressFile31}')` }}
           />
         </div>
@@ -183,32 +232,32 @@ function HeroSection() {
 
 function AboutSection() {
   return (
-    <section id="about" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-[96px] text-[#f8f7f9] mb-12">
+    <section id="about" className="py-12 sm:py-16 md:py-20 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
           About me
         </h2>
-        
+
         <div className="max-w-4xl">
-          <p className="font-['Poppins:Regular',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] leading-[1.5] mb-8">
-            I am a Fullstack Engineer and Tech Lead with expertise in building highly available, scalable Fintech SaaS platforms. Experienced in leading cross-functional teams and architecting cloud-native solutions using Python, Django, React, and AWS infrastructure.
+          <p className="font-['Poppins:Regular',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5] mb-6 sm:mb-8">
+            I am a Fullstack Engineer with expertise in building highly available, scalable Fintech and InsureTech platforms. Currently expanding into Java and Spring Boot backend development, engineering enterprise REST APIs, Spring Data JPA repository patterns, and layered architectures at Caava Group. Experienced in leading cross-functional teams and architecting cloud-native solutions using Python, Django, React, and AWS infrastructure.
           </p>
-          <p className="font-['Poppins:Regular',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] leading-[1.5]">
+          <p className="font-['Poppins:Regular',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
             Proven track record in developing multi-tenant systems serving multiple counties across Kenya, implementing fault-tolerant infrastructure achieving 99.9% availability, and optimizing database performance. Skilled in developing and implementing innovative strategies using modern DevOps practices, CI/CD pipelines, and Infrastructure as Code. I specialize in Software Engineering with a strong interest in Cloud Architecture, Artificial Intelligence, and building efficient, scalable solutions.
           </p>
         </div>
 
         {/* Skills */}
-        <div id="skills" className="mt-16">
-          <h3 className="font-['Poppins:Bold',_sans-serif] text-[24px] text-[#f8f7f9] mb-8">
+        <div id="skills" className="mt-12 sm:mt-16">
+          <h3 className="font-['Poppins:Bold',_sans-serif] text-xl sm:text-2xl text-[#f8f7f9] mb-6 sm:mb-8">
             SKILLS
           </h3>
-          <div className="max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-[20px] text-[rgba(248,247,249,0.7)] mb-3">
+              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
                 Frontend Development
               </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-[18px] text-[rgba(248,247,249,0.5)] space-y-2">
+              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
                 <li>• HTML5, CSS3, JavaScript</li>
                 <li>• TypeScript</li>
                 <li>• React.js</li>
@@ -217,23 +266,23 @@ function AboutSection() {
               </ul>
             </div>
             <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-[20px] text-[rgba(248,247,249,0.7)] mb-3">
+              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
                 Backend Development
               </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-[18px] text-[rgba(248,247,249,0.5)] space-y-2">
-                <li>• Python</li>
-                <li>• Django</li>
-                <li>• Django REST Framework</li>
+              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
+                <li>• Java, Spring Boot, Spring Data JPA</li>
+                <li>• Spring Security, JWT, RBAC</li>
+                <li>• Python, Django, Django REST Framework</li>
                 <li>• FastAPI</li>
-                <li>• PostgreSQL, Redis</li>
+                <li>• PostgreSQL, MySQL, Redis</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-[20px] text-[rgba(248,247,249,0.7)] mb-3">
+              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
                 AWS & DevOps
               </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-[18px] text-[rgba(248,247,249,0.5)] space-y-2">
-                <li>• AWS (ECS, RDS, S3, CloudFront)</li>
+              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
+                <li>• AWS (ECS, RDS, S3, CloudFront, Lambda, VPC, IAM, Amplify)</li>
                 <li>• Docker & Kubernetes</li>
                 <li>• CI/CD (GitHub Actions)</li>
                 <li>• Terraform (IaC)</li>
@@ -241,10 +290,21 @@ function AboutSection() {
               </ul>
             </div>
             <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-[20px] text-[rgba(248,247,249,0.7)] mb-3">
+              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
+                Testing & Tooling
+              </h4>
+              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
+                <li>• JUnit 5, Mockito, MockMvc</li>
+                <li>• PyTest</li>
+                <li>• Kafka, RabbitMQ</li>
+                <li>• Maven, Swagger/OpenAPI</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
                 Other Skills
               </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-[18px] text-[rgba(248,247,249,0.5)] space-y-2">
+              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
                 <li>• Networking (CISCO CCNA)</li>
                 <li>• Team Leadership</li>
                 <li>• Critical Thinking</li>
@@ -254,42 +314,20 @@ function AboutSection() {
           </div>
         </div>
 
-        {/* Education */}
-        <div className="mt-16">
-          <h3 className="font-['Poppins:Bold',_sans-serif] text-[24px] text-[#f8f7f9] mb-8">
-            EDUCATION
-          </h3>
-          <div className="max-w-4xl space-y-8">
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-2">
-                Mount Kenya University, Thika
-              </h4>
-              <p className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] leading-[1.5]">
-                Bachelor of Science in Information Technology - December 2023<br />
-                Second Class Upper Division
-              </p>
-            </div>
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-2">
-                Lenana School
-              </h4>
-              <p className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] leading-[1.5]">
-                High School Diploma (KCSE) - 2016-2019<br />
-                Aggregate of 60 points (B- Plain)
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Experience */}
-        <div className="mt-16">
-          <h3 className="font-['Poppins:Bold',_sans-serif] text-[24px] text-[#f8f7f9] mb-8">
+        <div className="mt-12 sm:mt-16">
+          <h3 className="font-['Poppins:Bold',_sans-serif] text-xl sm:text-2xl text-[#f8f7f9] mb-6 sm:mb-8">
             Experience
           </h3>
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-12">
+            <ExperienceItem
+              title="JAVA/SPRINGBOOT SOFTWARE ENGINEER"
+              period="May 2026 — Present"
+              description="Engineering enterprise REST APIs at Caava Group using Spring Boot and Spring Data JPA, converting legacy queries into optimized JPA repository patterns and layered architectures across the Financial Control Platform (v6). Spearheaded refactoring and modernization of OpenAPI/Swagger API documentation from v2 to v3 specs across distributed microservices. Implemented security and authorization frameworks using Spring Security, JWT authentication, and role-based access controls (RBAC). Optimized database interaction and resolved N+1 query performance bottlenecks using @EntityGraph and customized batch fetching. Built automated testing pipelines with JUnit 5, Mockito, and MockMvc for high code coverage and deployment stability."
+            />
             <ExperienceItem
               title="FULLSTACK ENGINEER / TECH LEAD"
-              period="August 2025 — Present"
+              period="August 2025 — May 2026"
               description="Led a cross-functional team of 4 (frontend, cloud, and cybersecurity engineers) at Dubu Huru Ltd in the architectural design, development, and deployment of a highly available Fintech SaaS (crowdfunding/fundraising) platform serving users across Africa and globally. Architected backend using Python (Django, Django REST Framework) with RESTful API design, achieving sub-millisecond to low-millisecond API response times and ~90% uptime. Implemented redundant and fault-tolerant infrastructure using AWS ECS Fargate with Auto Scaling and Application Load Balancer achieving 99.9% availability across multiple AZs. Optimized database performance using AWS RDS PostgreSQL with Read Replicas and ElastiCache (Redis). Decoupled slow operations using Celery workers for background jobs and with Redis as the broker, processing 200+ transactions in early production. Integrated multi-currency payment solutions (M-Pesa, Stripe, PayPal, Paystack). Built CI/CD pipelines using GitHub Actions with multi-stage Docker builds and AWS ECR. Deployed React frontend on AWS Amplify with Route 53 failover policy. Monitored systems using Prometheus, CloudWatch, and Sentry. Managed infrastructure as code using Terraform."
             />
             <ExperienceItem
@@ -304,6 +342,35 @@ function AboutSection() {
             />
           </div>
         </div>
+
+        {/* Education */}
+        <div className="mt-12 sm:mt-16">
+          <h3 className="font-['Poppins:Bold',_sans-serif] text-xl sm:text-2xl text-[#f8f7f9] mb-6 sm:mb-8">
+            EDUCATION
+          </h3>
+          <div className="max-w-4xl space-y-6 sm:space-y-8">
+            <div>
+              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-2">
+                Mount Kenya University, Thika
+              </h4>
+              <p className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
+                Bachelor of Science in Information Technology - December 2023<br />
+                Second Class Upper Division
+              </p>
+            </div>
+            <div>
+              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-2">
+                Lenana School
+              </h4>
+              <p className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
+                High School Diploma (KCSE) - 2016-2019<br />
+                Aggregate of 60 points (B Plain)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        
       </div>
     </section>
   );
@@ -312,13 +379,13 @@ function AboutSection() {
 function ExperienceItem({ title, period, description }: { title: string; period: string; description: string }) {
   return (
     <div className="max-w-4xl">
-      <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-1">
+      <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-1">
         {title}
       </h4>
-      <p className="font-['Poppins:ExtraLight',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-3">
+      <p className="font-['Poppins:ExtraLight',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] mb-3">
         {period}
       </p>
-      <p className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] leading-[1.5]">
+      <p className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg lg:text-xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
         {description}
       </p>
     </div>
@@ -329,7 +396,7 @@ function ProjectsSection() {
   const projects = [
     {
       title: "Linka Africa - Crowdfunding Platform",
-      period: "August 2025 — Present",
+      period: "August 2025 — May 2026",
       description: "A highly available Fintech SaaS crowdfunding/fundraising platform serving users across Africa and globally. Built with Django REST Framework backend, React frontend, deployed on AWS ECS Fargate with 99.9% availability. Features multi-currency payments (M-Pesa, Stripe, PayPal, Paystack), Redis caching, Celery workers, and Infrastructure as Code with Terraform. Full CI/CD pipeline with GitHub Actions.",
       link: "https://linka-africa.com"
     },
@@ -354,13 +421,13 @@ function ProjectsSection() {
   ];
 
   return (
-    <section id="projects" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-[96px] text-[#f8f7f9] mb-12">
+    <section id="projects" className="py-12 sm:py-16 md:py-20 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
           Projects
         </h2>
-        
-        <div className="space-y-8">
+
+        <div className="space-y-6 sm:space-y-8">
           {projects.map((project, index) => (
             <ProjectItem
               key={index}
@@ -379,10 +446,10 @@ function ProjectsSection() {
 function ProjectItem({ title, period, description, link }: { title: string; period: string; description: string; link?: string }) {
   return (
     <div className="max-w-4xl relative">
-      <div className="pl-8 relative">
-        <div className="absolute left-[-9px] top-[12px] w-[15px] h-[15px] bg-white/80 rounded-full backdrop-blur-sm"
+      <div className="pl-6 sm:pl-8 relative">
+        <div className="absolute left-[-6px] sm:left-[-9px] top-[8px] sm:top-[12px] w-[12px] h-[12px] sm:w-[15px] sm:h-[15px] bg-white/80 rounded-full backdrop-blur-sm"
              style={{ filter: 'blur(0.5px)' }} />
-        <h3 className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-1">
+        <h3 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-1">
           {link ? (
             <a
               href={link}
@@ -396,10 +463,10 @@ function ProjectItem({ title, period, description, link }: { title: string; peri
             title
           )}
         </h3>
-        <p className="font-['Poppins:ExtraLight',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-3">
+        <p className="font-['Poppins:ExtraLight',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] mb-3">
           {period}
         </p>
-        <p className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] leading-[1.5]">
+        <p className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg lg:text-xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
           {description}
         </p>
       </div>
@@ -452,25 +519,25 @@ function CertificationsSection() {
   ];
 
   return (
-    <section id="certifications" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-[96px] text-[#f8f7f9] mb-12">
+    <section id="certifications" className="py-12 sm:py-16 md:py-20 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
           Certifications
         </h2>
-        
-        <div className="space-y-8">
+
+        <div className="space-y-6 sm:space-y-8">
           {certifications.map((cert, index) => (
             <div key={index} className="max-w-4xl relative">
-              <div className="pl-8 relative">
-                <div className="absolute left-[-9px] top-[12px] w-[15px] h-[15px] bg-white/80 rounded-full backdrop-blur-sm"
+              <div className="pl-6 sm:pl-8 relative">
+                <div className="absolute left-[-6px] sm:left-[-9px] top-[8px] sm:top-[12px] w-[12px] h-[12px] sm:w-[15px] sm:h-[15px] bg-white/80 rounded-full backdrop-blur-sm"
                      style={{ filter: 'blur(0.5px)' }} />
-                <h3 className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-1">
+                <h3 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-1">
                   {cert.title}
                 </h3>
-                <p className="font-['Poppins:ExtraLight',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] mb-2">
+                <p className="font-['Poppins:ExtraLight',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] mb-2">
                   {cert.year}
                 </p>
-                <p className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)]">
+                <p className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg lg:text-xl text-[rgba(248,247,249,0.5)]">
                   {cert.organization}
                 </p>
               </div>
@@ -484,57 +551,57 @@ function CertificationsSection() {
 
 function ContactsSection() {
   return (
-    <section id="contacts" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-[96px] text-[#f8f7f9] mb-12">
+    <section id="contacts" className="py-12 sm:py-16 md:py-20 relative pb-16 sm:pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
           Contacts
         </h2>
-        
-        <div className="space-y-4 max-w-4xl">
-          <div>
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)]">
+
+        <div className="space-y-4 sm:space-y-6 max-w-4xl">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
               Email -
             </span>
             <a
               href="mailto:johnnkonge2020@gmail.com"
-              className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200"
+              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200 break-all"
             >
               johnnkonge2020@gmail.com
             </a>
           </div>
-          <div>
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)]">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
               Phone -
             </span>
             <a
               href="tel:+254768171426"
-              className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200"
+              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200"
             >
               +254 768 171 426
             </a>
           </div>
-          <div>
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)]">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
               GitHub -
             </span>
             <a
               href="https://github.com/JohnMartin-19/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200"
+              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200 break-all"
             >
               github.com/JohnMartin-19
             </a>
           </div>
-          <div>
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)]">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
               LinkedIn -
             </span>
             <a
               href="https://www.linkedin.com/in/john-m-015922206/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-['Poppins:Medium',_sans-serif] text-[24px] text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200"
+              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200 break-all"
             >
               linkedin.com/in/john-m-015922206
             </a>
