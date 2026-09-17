@@ -1,545 +1,236 @@
-import { useState, useEffect } from 'react';
-import svgPaths from "./imports/svg-6sovak61ez";
-import imgAdobeExpressFile31 from "./img/mburu.jpeg";
+import { useState, useEffect } from "react";
 
-function Navigation() {
-  const [activeSection, setActiveSection] = useState('home');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const NAV_LINKS = [
+  { label: "About", href: "#about" },
+  { label: "Work", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
+];
 
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'certifications', label: 'Certifications' },
-    { id: 'contacts', label: 'Contact' }
-  ];
+const SKILLS = [
+  {
+    category: "Frontend",
+    items: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    category: "Backend",
+    items: ["Java(SpringBoot)", "Django", "Fast API", "PostgreSQL", "Redis"],
+  },
+  {
+    category: "Infrastructure",
+    items: ["AWS", "Docker", "Kubernetes", "Terraform", "CI/CD"],
+  },
+  {
+    category: "Practices",
+    items: ["System Design", "API Design", "Code Review", "Tech Leadership", "Agile"],
+  },
+];
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
-      setMobileMenuOpen(false);
-    }
-  };
+const PROJECTS = [
+  {
+    title: "DEWCIS Archiver & LDAP System",
+    description:
+      "Linux file archiving system with REST API, real-time dashboard, and LDAP query integration. Packaged as a Debian release with Docker Compose environment.",
+    tags: ["Python", "FastAPI", "PostgreSQL", "Docker", "LDAP"],
+    year: "2026",
+    link: "https://github.com/JohnMartin-19/DEWCIS",
+  },
+  {
+    title: "Linka Africa",
+    description:
+      "Transparent fundraising platform connecting donors directly to verified beneficiaries with real-time donation tracking and local mobile money integration (M-Pesa, Airtel).",
+    tags: ["TypeScript", "React", "Django", "PostgreSQL", "AWS"],
+    year: "2025",
+    link: "https://github.com/JohnMartin-19/Linka-Africa",
+  },
+  {
+    title: "Turnquest Life",
+    description:
+      "Microservice-based insurance management system mimicking enterprise core software. Features dynamic service discovery, localized authentication, policy handling, and claims routing.",
+    tags: ["Java", "Spring Boot", "Spring Cloud Gateway", "Eureka"],
+    year: "2026",
+    link: "https://github.com/JohnMartin-19/turnquest-life",
+  },
+];
+
+const EXPERIENCE = [
+  {
+    role: "Backend Software Engineer",
+    company: "Caava Group",
+    period: "2026 — Present",
+    description:
+      "Engineering enterprise REST APIs and microservices for the Financial Control Platform (v6) using Spring Boot. Built and maintained payment orchestration services across 5 African insurance markets. Contributed to a complete backend migration from monolith to microservices with zero customer-facing downtime.",
+  },
+  {
+    role: "FullStack Engineer",
+    company: "Dubu Huru Ltd",
+    period: "2025 — 2026",
+    description:
+      "Led a team of 4 building a high-availability Fintech SaaS platform using Django, React, and Redis. Architected multi-currency payment workflows (M-Pesa, Stripe, PayPal) on AWS ECS Fargate, decoupled async tasks via Celery, and implemented automated GitHub Actions CI/CD pipelines.",
+  },
+  {
+    role: "Software Engineer",
+    company: "Jambo Pay",
+    period: "2024 — 2025",
+    description:
+      "Developed a multi-tenant E-Revenue Management System serving 10 Kenyan counties across parking fees, land rates, business permits, unstructured revenue and e-wallets. Migrated legacy monolith modules to REST APIs cutting latency by 30%, implemented PostGIS geospatial tracking, and integrated USSD payment flows.",
+  },
+  {
+    role: "Software Developer Intern",
+    company: "Jambo Pay",
+    period: "2023",
+    description:
+      "Developed backend Python/Django REST Framework projects assigned by executive engineering leadership, collaborating across teams to deliver functional prototypes and core feature assignments.",
+  },
+];
+
+function Nav() {
+
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => item.id);
-      const scrollPosition = window.scrollY + 100;
-
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const height = element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#1f1f1f]/90 backdrop-blur-sm border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        <div className="flex justify-between items-center">
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8 xl:gap-12">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`font-['Poppins:Regular',_sans-serif] text-base sm:text-lg transition-colors duration-200 ${
-                  activeSection === item.id ? 'text-[#f8f7f9]' : 'text-[#f8f7f9]/70 hover:text-[#f8f7f9]'
-                }`}
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-[#080808]/90 backdrop-blur-md border-b border-white/5" : ""
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+        <a href="#" className="font-display text-lg font-light tracking-tight">
+          JM<span style={{ color: "var(--primary)" }}>.</span>
+        </a>
+
+        {/* Desktop */}
+        <ul className="hidden md:flex gap-8 font-mono text-xs tracking-widest uppercase">
+          {NAV_LINKS.map((l) => (
+            <li key={l.label}>
+              <a
+                href={l.href}
+                className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-200"
               >
-                {item.label}
-              </button>
-            ))}
-          </div>
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
 
-          {/* Logo/Name for Mobile */}
-          <div className="lg:hidden font-['Poppins:Bold',_sans-serif] text-lg text-[#f8f7f9]">
-            John Mburu
-          </div>
+        <a
+          href="mailto:john@mburunkonge.com"
+          className="hidden md:inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase px-4 py-2 border border-white/10 hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-200"
+        >
+          Hire me
+        </a>
 
-          {/* Desktop Social Icons */}
-          <div className="hidden lg:flex items-center gap-6">
-            <div className="h-11 w-px bg-[#f8f7f9]" />
-            <div className="flex gap-6">
-              <SocialIcon type="github" href="https://github.com/JohnMartin-19/" />
-              <SocialIcon type="linkedin" href="https://www.linkedin.com/in/john-m-015922206/" />
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-[#f8f7f9]"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t border-white/10 pt-4">
-            <div className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`font-['Poppins:Regular',_sans-serif] text-base text-left transition-colors duration-200 ${
-                    activeSection === item.id ? 'text-[#f8f7f9]' : 'text-[#f8f7f9]/70'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-              <div className="flex gap-6 pt-4 border-t border-white/10">
-                <SocialIcon type="github" href="https://github.com/JohnMartin-19/" />
-                <SocialIcon type="linkedin" href="https://www.linkedin.com/in/john-m-015922206/" />
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden flex flex-col gap-1.5 p-1"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span
+            className={`block w-6 h-px bg-current transition-all duration-200 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`}
+          />
+          <span
+            className={`block w-6 h-px bg-current transition-all duration-200 ${menuOpen ? "opacity-0" : ""}`}
+          />
+          <span
+            className={`block w-6 h-px bg-current transition-all duration-200 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`}
+          />
+        </button>
       </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#080808] border-b border-white/5 px-6 pb-6">
+          {NAV_LINKS.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              onClick={() => setMenuOpen(false)}
+              className="block py-3 font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] hover:text-[var(--foreground)] border-b border-white/5"
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
 
-function SocialIcon({ type, href }: { type: 'github' | 'linkedin'; href: string }) {
-  const getPath = () => {
-    if (type === 'github') {
-      return (
-        <path
-          d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          fill="none"
-        />
-      );
-    } else {
-      return (
-        <path
-          d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"
-          fill="currentColor"
-        />
-      );
-    }
-  };
-
+function Hero() {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-[#f8f7f9] hover:text-[#f8f7f9]/80 transition-colors duration-200"
-    >
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24">
-        {getPath()}
-        {type === 'linkedin' && <circle cx="4" cy="4" r="2" fill="currentColor" />}
-      </svg>
-    </a>
-  );
-}
+    <section className="min-h-screen flex flex-col justify-end pb-20 pt-32 px-6 max-w-6xl mx-auto relative">
+      {/* Background grid lines */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }}
+      />
 
-function HeroSection() {
-  const scrollToProjects = () => {
-    const element = document.getElementById('projects');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+      <div className="relative z-10">
+        <p className="font-mono text-xs tracking-widest uppercase text-[var(--primary)] mb-6 animate-fade-up delay-100">
+          Available for opportunities
+        </p>
 
-  return (
-    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden pt-20 sm:pt-24">
-      {/* Background blur effect */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] lg:w-[905px] lg:h-[897px]">
-          <div className="absolute inset-0 opacity-10">
-            <svg className="w-full h-full" viewBox="0 0 1417 1409">
-              <defs>
-                <filter id="blur" colorInterpolationFilters="sRGB" filterUnits="userSpaceOnUse">
-                  <feGaussianBlur stdDeviation="128" />
-                </filter>
-              </defs>
-              <ellipse
-                cx="708.5"
-                cy="704.5"
-                rx="452.5"
-                ry="448.5"
-                fill="#f8f7f9"
-                filter="url(#blur)"
-              />
-            </svg>
-          </div>
+        <h1 className="font-display text-[clamp(3.5rem,10vw,8.5rem)] font-light leading-[0.92] tracking-tight text-balance animate-fade-up delay-200">
+          John
+          <br />
+          <span className="italic">Mburu</span>
+          <span style={{ color: "var(--primary)" }}>.</span>
+        </h1>
+
+        <div className="mt-8 flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
+          <p className="font-display text-xl md:text-2xl font-light text-[var(--muted-foreground)] italic animate-fade-up delay-300 max-w-xs">
+            IT Specialist<br />& Fullstack Engineer
+          </p>
+
+          <p className="font-light text-[var(--muted-foreground)] max-w-sm leading-relaxed animate-fade-up delay-400 text-sm md:text-base">
+            I build systems that scale — from API design to distributed infrastructure.
+            Based in Nairobi, working with teams across Africa and beyond.
+          </p>
         </div>
-      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center py-8">
-        {/* Left content */}
-        <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
-          <div className="space-y-3 sm:space-y-4">
-            <h2 className="font-['Poppins:Bold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[#f8f7f9]">
-              HI, I'M JOHN MBURU
-            </h2>
-            <h1 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] leading-[0.9] text-[#f8f7f9]">
-              FULLSTACK<br />ENGINEER
-            </h1>
-          </div>
-
-          <button
-            onClick={scrollToProjects}
-            className="group border-2 border-[#f8f7f9] px-6 py-3 sm:px-8 sm:py-4 rounded-2xl transition-all duration-300 hover:bg-[#f8f7f9] hover:text-[#1f1f1f]"
+        <div className="mt-12 flex flex-wrap gap-4 animate-fade-up delay-500">
+          <a
+            href="#projects"
+            className="inline-flex items-center gap-3 bg-[var(--primary)] text-[var(--primary-foreground)] font-mono text-xs tracking-widest uppercase px-6 py-3.5 hover:bg-white transition-colors duration-200"
           >
-            <span className="font-['Poppins:Bold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[#f8f7f9] group-hover:text-[#1f1f1f] transition-colors duration-300">
-              VIEW MY PROJECTS
-            </span>
-          </button>
+            View my work
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5"/>
+            </svg>
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-3 border border-white/10 font-mono text-xs tracking-widest uppercase px-6 py-3.5 hover:border-white/30 transition-colors duration-200 text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+          >
+            Get in touch
+          </a>
         </div>
 
-        {/* Right content - Profile image */}
-        <div className="relative order-1 lg:order-2">
-          <div
-            className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] bg-cover bg-center bg-no-repeat rounded-lg"
-            style={{ backgroundImage: `url('${imgAdobeExpressFile31}')` }}
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AboutSection() {
-  return (
-    <section id="about" className="py-12 sm:py-16 md:py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
-          About me
-        </h2>
-
-        <div className="max-w-4xl">
-          <p className="font-['Poppins:Regular',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5] mb-6 sm:mb-8">
-            I am a Fullstack Engineer with expertise in building highly available, scalable Fintech and InsureTech platforms. Currently expanding into Java and Spring Boot backend development, engineering enterprise REST APIs, Spring Data JPA repository patterns, and layered architectures at Caava Group. Experienced in leading cross-functional teams and architecting cloud-native solutions using Python, Django, React, and AWS infrastructure.
-          </p>
-          <p className="font-['Poppins:Regular',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
-            Proven track record in developing multi-tenant systems serving multiple counties across Kenya, implementing fault-tolerant infrastructure achieving 99.9% availability, and optimizing database performance. Skilled in developing and implementing innovative strategies using modern DevOps practices, CI/CD pipelines, and Infrastructure as Code. I specialize in Software Engineering with a strong interest in Cloud Architecture, Artificial Intelligence, and building efficient, scalable solutions.
-          </p>
-        </div>
-
-        {/* Skills */}
-        <div id="skills" className="mt-12 sm:mt-16">
-          <h3 className="font-['Poppins:Bold',_sans-serif] text-xl sm:text-2xl text-[#f8f7f9] mb-6 sm:mb-8">
-            SKILLS
-          </h3>
-          <div className="max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
-                Frontend Development
-              </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
-                <li>• HTML5, CSS3, JavaScript</li>
-                <li>• TypeScript</li>
-                <li>• React.js</li>
-                <li>• Vanilla JS</li>
-                <li>• Responsive Design</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
-                Backend Development
-              </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
-                <li>• Java, Spring Boot, Spring Data JPA</li>
-                <li>• Spring Security, JWT, RBAC</li>
-                <li>• Python, Django, Django REST Framework</li>
-                <li>• FastAPI</li>
-                <li>• PostgreSQL, MySQL, Redis</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
-                AWS & DevOps
-              </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
-                <li>• AWS (ECS, RDS, S3, CloudFront, Lambda, VPC, IAM, Amplify)</li>
-                <li>• Docker & Kubernetes</li>
-                <li>• CI/CD (GitHub Actions)</li>
-                <li>• Terraform (IaC)</li>
-                <li>• Monitoring (Prometheus, CloudWatch)</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
-                Testing & Tooling
-              </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
-                <li>• JUnit 5, Mockito, MockMvc</li>
-                <li>• PyTest</li>
-                <li>• Kafka, RabbitMQ</li>
-                <li>• Maven, Swagger/OpenAPI</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl text-[rgba(248,247,249,0.7)] mb-3">
-                Other Skills
-              </h4>
-              <ul className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg text-[rgba(248,247,249,0.5)] space-y-2">
-                <li>• Networking (CISCO CCNA)</li>
-                <li>• Team Leadership</li>
-                <li>• Critical Thinking</li>
-                <li>• Problem Solving</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Experience */}
-        <div className="mt-12 sm:mt-16">
-          <h3 className="font-['Poppins:Bold',_sans-serif] text-xl sm:text-2xl text-[#f8f7f9] mb-6 sm:mb-8">
-            Experience
-          </h3>
-          <div className="space-y-8 sm:space-y-12">
-            <ExperienceItem
-              title="JAVA/SPRINGBOOT SOFTWARE ENGINEER"
-              period="May 2026 — Present"
-              description="Engineering enterprise REST APIs at Caava Group using Spring Boot and Spring Data JPA, converting legacy queries into optimized JPA repository patterns and layered architectures across the Financial Control Platform (v6). Spearheaded refactoring and modernization of OpenAPI/Swagger API documentation from v2 to v3 specs across distributed microservices. Implemented security and authorization frameworks using Spring Security, JWT authentication, and role-based access controls (RBAC). Optimized database interaction and resolved N+1 query performance bottlenecks using @EntityGraph and customized batch fetching. Built automated testing pipelines with JUnit 5, Mockito, and MockMvc for high code coverage and deployment stability."
-            />
-            <ExperienceItem
-              title="FULLSTACK ENGINEER / TECH LEAD"
-              period="August 2025 — May 2026"
-              description="Led a cross-functional team of 4 (frontend, cloud, and cybersecurity engineers) at Dubu Huru Ltd in the architectural design, development, and deployment of a highly available Fintech SaaS (crowdfunding/fundraising) platform serving users across Africa and globally. Architected backend using Python (Django, Django REST Framework) with RESTful API design, achieving sub-millisecond to low-millisecond API response times and ~90% uptime. Implemented redundant and fault-tolerant infrastructure using AWS ECS Fargate with Auto Scaling and Application Load Balancer achieving 99.9% availability across multiple AZs. Optimized database performance using AWS RDS PostgreSQL with Read Replicas and ElastiCache (Redis). Decoupled slow operations using Celery workers for background jobs and with Redis as the broker, processing 200+ transactions in early production. Integrated multi-currency payment solutions (M-Pesa, Stripe, PayPal, Paystack). Built CI/CD pipelines using GitHub Actions with multi-stage Docker builds and AWS ECR. Deployed React frontend on AWS Amplify with Route 53 failover policy. Monitored systems using Prometheus, CloudWatch, and Sentry. Managed infrastructure as code using Terraform."
-            />
-            <ExperienceItem
-              title="SOFTWARE ENGINEER"
-              period="May 2024 — August 2025"
-              description="Developed and maintained a multi-tenant County E-Revenue Management System at JamboPay serving 10 counties across Kenya (Embu, Tharaka Nithi, Busia, Kisii, Uasin Gishu, Bomet, Kajiado, Samburu, Meru, and Samburu National Park), handling parking fees, land rates, business permits, and e-wallet payments. Led migration of legacy Django MVT modules to decoupled Django REST Framework architecture with Vanilla JS frontends, reducing frontend-to-backend latency by 30%. Designed and implemented new feature modules end-to-end from PostgreSQL schema design to Vanilla JS dashboard integration. Improved revenue reporting accuracy by 15% by implementing geospatial mapping using PostGIS and AnyChart JS. Improved database query efficiency by 22% through schema normalization, composite indexing, and query profiling. Decreased production bug reports by 20% by introducing standardized unit testing and E2E testing suite. Diagnosed and resolved defects in reporting modules ensuring data integrity and compliance with county financial reporting requirements."
-            />
-            <ExperienceItem
-              title="SOFTWARE DEVELOPER INTERN"
-              period="May — July 2023"
-              description="Selected for an internship position at JamboPay, one of Kenya's top fin-tech companies. Worked with the Research and Development Department, developing solutions based on technology and technology stacks. Built hands-on skills in Software Development, primarily Backend Development using Python, JavaScript, Django & REST Framework. Worked on several projects under the guidance of CTO Ahmed. Demonstrated ability to work flexible hours across night, weekend and holiday shifts. Proven ability to develop and implement creative solutions to complex problems. Learned and adapted quickly to new technology and software applications. Strengthened communication skills through regular interactions with team members."
-            />
-          </div>
-        </div>
-
-        {/* Education */}
-        <div className="mt-12 sm:mt-16">
-          <h3 className="font-['Poppins:Bold',_sans-serif] text-xl sm:text-2xl text-[#f8f7f9] mb-6 sm:mb-8">
-            EDUCATION
-          </h3>
-          <div className="max-w-4xl space-y-6 sm:space-y-8">
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-2">
-                Mount Kenya University, Thika
-              </h4>
-              <p className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
-                Bachelor of Science in Information Technology - December 2023<br />
-                Second Class Upper Division
-              </p>
-            </div>
-            <div>
-              <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-2">
-                Lenana School
-              </h4>
-              <p className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
-                High School Diploma (KCSE) - 2016-2019<br />
-                Aggregate of 60 points (B Plain)
-              </p>
-            </div>
-          </div>
-        </div>
-
-        
-      </div>
-    </section>
-  );
-}
-
-function ExperienceItem({ title, period, description }: { title: string; period: string; description: string }) {
-  return (
-    <div className="max-w-4xl">
-      <h4 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-1">
-        {title}
-      </h4>
-      <p className="font-['Poppins:ExtraLight',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] mb-3">
-        {period}
-      </p>
-      <p className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg lg:text-xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
-        {description}
-      </p>
-    </div>
-  );
-}
-
-function ProjectsSection() {
-  const projects = [
-    {
-      title: "Linka Africa - Crowdfunding Platform",
-      period: "August 2025 — May 2026",
-      description: "A highly available Fintech SaaS crowdfunding/fundraising platform serving users across Africa and globally. Built with Django REST Framework backend, React frontend, deployed on AWS ECS Fargate with 99.9% availability. Features multi-currency payments (M-Pesa, Stripe, PayPal, Paystack), Redis caching, Celery workers, and Infrastructure as Code with Terraform. Full CI/CD pipeline with GitHub Actions.",
-      link: "https://linka-africa.com"
-    },
-    {
-      title: "DEWCIS - File Archiving System",
-      period: "2026",
-      description: "A complete implementation of a file archiving system with REST API, web dashboard, and LDAP integration.. Built with Python(Fast API), Docker PostgreSQL and modern web technologies, demonstrating proficiency in backend architecture, database design, and user interface development.",
-      link: "https://github.com/JohnMartin-19/DEWCIS"
-    },
-    {
-      title: "Supermart ERP System",
-      period: "2025",
-      description: "An Enterprise Resource Planning (ERP) system designed for supermarket operations. Features inventory management, sales tracking, and business analytics. Built with Django framework, demonstrating complex business logic implementation and data management capabilities.",
-      link: "https://github.com/JohnMartin-19/supermart-erp"
-    },
-    {
-      title: "JamboLife 2.0 - Insurance Management Platform",
-      period: "May — July 2023",
-      description: "A comprehensive insurance management system built using Python, JavaScript, Django & REST Framework during my internship at JamboPay. The platform streamlines insurance operations and customer management for the fin-tech industry.",
-      link: "https://github.com/JohnMartin-19/jambolife2.0"
-    }
-  ];
-
-  return (
-    <section id="projects" className="py-12 sm:py-16 md:py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
-          Projects
-        </h2>
-
-        <div className="space-y-6 sm:space-y-8">
-          {projects.map((project, index) => (
-            <ProjectItem
-              key={index}
-              title={project.title}
-              period={project.period}
-              description={project.description}
-              link={project.link}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ProjectItem({ title, period, description, link }: { title: string; period: string; description: string; link?: string }) {
-  return (
-    <div className="max-w-4xl relative">
-      <div className="pl-6 sm:pl-8 relative">
-        <div className="absolute left-[-6px] sm:left-[-9px] top-[8px] sm:top-[12px] w-[12px] h-[12px] sm:w-[15px] sm:h-[15px] bg-white/80 rounded-full backdrop-blur-sm"
-             style={{ filter: 'blur(0.5px)' }} />
-        <h3 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-1">
-          {link ? (
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200"
-            >
-              {title} →
-            </a>
-          ) : (
-            title
-          )}
-        </h3>
-        <p className="font-['Poppins:ExtraLight',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] mb-3">
-          {period}
-        </p>
-        <p className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg lg:text-xl text-[rgba(248,247,249,0.5)] leading-[1.5]">
-          {description}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function CertificationsSection() {
-  const certifications = [
-    {
-      title: "Claude Code in Action",
-      year: "2026",
-      organization: "Anthropic"
-    },
-    {
-      title: "Kubernetes and Cloud Native Associate (KCNA)",
-      year: "2025",
-      organization: "Linux Foundation"
-    },
-    {
-      title: "AWS Certified Cloud Practitioner",
-      year: "2025",
-      organization: "Amazon Web Services"
-    },
-    {
-      title: "DevOps on AWS",
-      year: "2025",
-      organization: "Amazon Web Services"
-    },
-    {
-      title: "CISCO CCNA",
-      year: "2023",
-      organization: "Cisco Networking Academy"
-    },
-    {
-      title: "BIG DATA & AI - Certificate of Completion",
-      year: "2023",
-      organization: "Mount Kenya University"
-    },
-    {
-      title: "Introduction to Cyber Security",
-      year: "2023",
-      organization: "Cisco / Mount Kenya University"
-    },
-    {
-      title: "Software Development Prep - Certificate of Completion",
-      year: "2022",
-      organization: "Moringa School"
-    }
-  ];
-
-  return (
-    <section id="certifications" className="py-12 sm:py-16 md:py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
-          Certifications
-        </h2>
-
-        <div className="space-y-6 sm:space-y-8">
-          {certifications.map((cert, index) => (
-            <div key={index} className="max-w-4xl relative">
-              <div className="pl-6 sm:pl-8 relative">
-                <div className="absolute left-[-6px] sm:left-[-9px] top-[8px] sm:top-[12px] w-[12px] h-[12px] sm:w-[15px] sm:h-[15px] bg-white/80 rounded-full backdrop-blur-sm"
-                     style={{ filter: 'blur(0.5px)' }} />
-                <h3 className="font-['Poppins:ExtraBold',_sans-serif] text-lg sm:text-xl md:text-2xl text-[rgba(248,247,249,0.5)] mb-1">
-                  {cert.title}
-                </h3>
-                <p className="font-['Poppins:ExtraLight',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] mb-2">
-                  {cert.year}
-                </p>
-                <p className="font-['Poppins:Medium',_sans-serif] text-sm sm:text-base md:text-lg lg:text-xl text-[rgba(248,247,249,0.5)]">
-                  {cert.organization}
-                </p>
+        {/* Stats row */}
+        <div className="mt-20 pt-8 border-t border-white/5 grid grid-cols-3 gap-8 md:w-2/3">
+          {[
+            { n: "3+", label: "Years building" },
+            { n: "4M+", label: "Users served" },
+            { n: "5", label: "Countries shipped" },
+          ].map((s) => (
+            <div key={s.label}>
+              <div className="font-display text-3xl md:text-4xl font-light" style={{ color: "var(--primary)" }}>
+                {s.n}
+              </div>
+              <div className="font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] mt-1">
+                {s.label}
               </div>
             </div>
           ))}
@@ -549,80 +240,278 @@ function CertificationsSection() {
   );
 }
 
-function ContactsSection() {
+function About() {
   return (
-    <section id="contacts" className="py-12 sm:py-16 md:py-20 relative pb-16 sm:pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="font-['Poppins:Bold',_sans-serif] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px] text-[#f8f7f9] mb-8 sm:mb-12">
-          Contacts
-        </h2>
+    <section id="about" className="py-28 px-6 max-w-6xl mx-auto">
+      <div className="grid md:grid-cols-12 gap-12 md:gap-20 items-start">
+        <div className="md:col-span-4">
+          <p className="font-mono text-xs tracking-widest uppercase text-[var(--primary)] mb-4">
+            001 / About
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-light leading-tight">
+            Built for<br /><span className="italic">scale.</span>
+          </h2>
+        </div>
 
-        <div className="space-y-4 sm:space-y-6 max-w-4xl">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
-              Email -
-            </span>
-            <a
-              href="mailto:johnnkonge2020@gmail.com"
-              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200 break-all"
-            >
-              johnnkonge2020@gmail.com
-            </a>
+        <div className="md:col-span-8 space-y-6">
+          <p className="text-[var(--muted-foreground)] leading-relaxed font-light">
+            I'm a mid-level fullstack engineer with deep roots in African fintech and
+            insuretech infrastructure. I've spent the last three years shipping
+            software that real people depend on — payment systems, insurance systems, 
+            event ticketing platforms — and building the teams that maintain them.
+          </p>
+          <p className="text-[var(--muted-foreground)] leading-relaxed font-light">
+            My technical work spans the full stack: I'm equally at home designing
+            database schemas, reviewing distributed systems architecture, or shipping a
+            polished React interface. I believe good engineering is fundamentally about
+            clarity — in code, in communication, and in product decisions.
+          </p>
+          <p className="text-[var(--muted-foreground)] leading-relaxed font-light">
+            Outside of work I mentor developers through the Andela network and contribute
+            to open-source projects focused on African developer tooling. I also love hiking.
+          </p>
+
+          {/* Skills grid */}
+          <div className="pt-8 border-t border-white/5 grid grid-cols-2 gap-8">
+            {SKILLS.map((group) => (
+              <div key={group.category}>
+                <p className="font-mono text-xs tracking-widest uppercase text-[var(--primary)] mb-3">
+                  {group.category}
+                </p>
+                <ul className="space-y-1.5">
+                  {group.items.map((item) => (
+                    <li key={item} className="text-sm text-[var(--muted-foreground)] font-light flex items-center gap-2">
+                      <span className="w-1 h-1 bg-[var(--muted-foreground)] rounded-full flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
-              Phone -
-            </span>
-            <a
-              href="tel:+254768171426"
-              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200"
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Projects() {
+  const [hovered, setHovered] = useState<number | null>(null);
+
+  return (
+    <section id="projects" className="py-28 px-6 max-w-6xl mx-auto">
+      <div className="flex items-end justify-between mb-16 border-b border-white/5 pb-8">
+        <div>
+          <p className="font-mono text-xs tracking-widest uppercase text-[var(--primary)] mb-3">
+            002 / Work
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-light leading-tight">
+            Selected<br /><span className="italic">projects</span>
+          </h2>
+        </div>
+        <p className="hidden md:block font-mono text-xs text-[var(--muted-foreground)] tracking-widest uppercase">
+          {PROJECTS.length} projects
+        </p>
+      </div>
+
+      <div className="space-y-0">
+        {PROJECTS.map((project, i) => (
+          <a
+            key={project.title}
+            href={project.link}
+            className="group block border-b border-white/5 py-10 hover:bg-white/[0.02] transition-colors duration-200 -mx-6 px-6"
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <div className="grid md:grid-cols-12 gap-6 items-start">
+              <div className="md:col-span-1">
+                <span className="font-mono text-xs text-[var(--muted-foreground)]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <div className="md:col-span-5">
+                <h3 className={`font-display text-2xl md:text-3xl font-light transition-colors duration-200 ${hovered === i ? "text-[var(--primary)]" : ""}`}>
+                  {project.title}
+                </h3>
+              </div>
+
+              <div className="md:col-span-5">
+                <p className="text-sm text-[var(--muted-foreground)] font-light leading-relaxed">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="font-mono text-xs px-2 py-1 border border-white/8 text-[var(--muted-foreground)]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="md:col-span-1 flex justify-end items-start">
+                <div className={`transition-all duration-200 ${hovered === i ? "translate-x-1 -translate-y-1 text-[var(--primary)]" : "text-[var(--muted-foreground)]"}`}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 13L13 3M13 3H7M13 3V9" stroke="currentColor" strokeWidth="1.5"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Experience() {
+  return (
+    <section id="experience" className="py-28 px-6 max-w-6xl mx-auto">
+      <div className="grid md:grid-cols-12 gap-12">
+        <div className="md:col-span-4">
+          <p className="font-mono text-xs tracking-widest uppercase text-[var(--primary)] mb-4">
+            003 / Experience
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-light leading-tight">
+            Where I've<br /><span className="italic">worked</span>
+          </h2>
+        </div>
+
+        <div className="md:col-span-8 space-y-0">
+          {EXPERIENCE.map((exp, i) => (
+            <div
+              key={exp.company}
+              className="border-t border-white/5 py-10 group"
             >
-              +254 768 171 426
-            </a>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
-              GitHub -
-            </span>
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                <div>
+                  <h3 className="font-display text-xl font-light">{exp.role}</h3>
+                  <p className="font-mono text-sm text-[var(--primary)] mt-1">{exp.company}</p>
+                </div>
+                <span className="font-mono text-xs text-[var(--muted-foreground)] tracking-widest whitespace-nowrap mt-1">
+                  {exp.period}
+                </span>
+              </div>
+              <p className="text-sm text-[var(--muted-foreground)] font-light leading-relaxed">
+                {exp.description}
+              </p>
+            </div>
+          ))}
+
+          <div className="border-t border-white/5 pt-8">
             <a
-              href="https://github.com/JohnMartin-19/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200 break-all"
+              href="/resume.pdf"
+              className="inline-flex items-center gap-3 font-mono text-xs tracking-widest uppercase text-[var(--primary)] hover:gap-4 transition-all duration-200"
             >
-              github.com/JohnMartin-19
-            </a>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-            <span className="font-['Poppins:ExtraBold',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)]">
-              LinkedIn -
-            </span>
-            <a
-              href="https://www.linkedin.com/in/john-m-015922206/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-['Poppins:Medium',_sans-serif] text-base sm:text-lg md:text-xl lg:text-2xl text-[rgba(248,247,249,0.5)] hover:text-[rgba(248,247,249,0.8)] transition-colors duration-200 break-all"
-            >
-              linkedin.com/in/john-m-015922206
+              Download full resume
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M6 2v6M3 6l3 4 3-4" stroke="currentColor" strokeWidth="1.5"/>
+              </svg>
             </a>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("john@mburunkonge.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <section id="contact" className="py-28 px-6 max-w-6xl mx-auto border-t border-white/5">
+      <div className="grid md:grid-cols-12 items-end gap-12">
+        <div className="md:col-span-7">
+          <p className="font-mono text-xs tracking-widest uppercase text-[var(--primary)] mb-6">
+            004 / Contact
+          </p>
+          <h2 className="font-display text-[clamp(3rem,8vw,6rem)] font-light leading-[0.92] tracking-tight">
+            Let's build<br /><span className="italic">something</span><br />together
+            <span style={{ color: "var(--primary)" }}>.</span>
+          </h2>
+          <p className="mt-8 text-[var(--muted-foreground)] font-light leading-relaxed max-w-md">
+            I'm open to backend engineering roles, fullstack positions, and select freelance
+            engagements. If you're working on something interesting, let's talk.
+          </p>
+        </div>
+
+        <div className="md:col-span-5 space-y-6">
+          <div>
+            <p className="font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] mb-3">
+              Email
+            </p>
+            <button
+              onClick={handleCopy}
+              className="font-display text-xl md:text-2xl font-light hover:text-[var(--primary)] transition-colors duration-200 flex items-center gap-3 group"
+            >
+              johnnkonge2020@gmail.com
+              <span className="font-mono text-xs text-[var(--muted-foreground)] group-hover:text-[var(--primary)] transition-colors">
+                {copied ? "Copied!" : "Copy"}
+              </span>
+            </button>
+          </div>
+
+          <div className="border-t border-white/5 pt-6">
+            <p className="font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] mb-4">
+              Elsewhere
+            </p>
+            <div className="flex gap-6">
+              {[
+                { label: "GitHub", href: "https://github.com/mburunkonge" },
+                { label: "LinkedIn", href: "https://linkedin.com/in/mburunkonge" },
+              ].map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors duration-200"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="py-8 px-6 max-w-6xl mx-auto border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p className="font-mono text-xs text-[var(--muted-foreground)] tracking-widest">
+        © {new Date().getFullYear()} John Mburu
+      </p>
+      <p className="font-mono text-xs text-[var(--muted-foreground)] tracking-widest">
+        Nairobi, Kenya
+      </p>
+    </footer>
   );
 }
 
 export default function App() {
   return (
-    <div className="bg-[#1f1f1f] min-h-screen text-white">
-      <Navigation />
+    <div className="noise-overlay">
+      <Nav />
       <main>
-        <HeroSection />
-        <AboutSection />
-        <ProjectsSection />
-        <CertificationsSection />
-        <ContactsSection />
+        <Hero />
+        <About />
+        <Projects />
+        <Experience />
+        <Contact />
       </main>
+      <Footer />
     </div>
   );
 }
