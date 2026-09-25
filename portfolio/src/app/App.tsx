@@ -41,7 +41,7 @@ const PROJECTS = [
       "Transparent fundraising platform connecting donors directly to verified beneficiaries with real-time donation tracking and local mobile money integration (M-Pesa, Airtel).",
     tags: ["TypeScript", "React", "Django", "PostgreSQL", "AWS"],
     year: "2025",
-    link: "https://github.com/JohnMartin-19/Linka-Africa",
+    link: "https://github.com/JohnMartin-19/Linka",
   },
   {
     title: "Turnquest Life",
@@ -59,29 +59,38 @@ const EXPERIENCE = [
     company: "Caava Group",
     period: "2026 — Present",
     description:
-      "Engineering enterprise REST APIs and microservices for the Financial Control Platform (v6) using Spring Boot. Built and maintained payment orchestration services across 5 African insurance markets. Contributed to a complete backend migration from monolith to microservices with zero customer-facing downtime.",
+      "Engineering enterprise REST APIs and microservices for the Financial Control Platform (v6) using Spring Boot and cloud native architectural patterns, applying domain-driven service boundaries and idempotent payment design across 5 African insurance markets. Contributed to a complete backend migration from monolith to microservices architecture with zero customer-facing downtime, using AI-assisted tooling (Claude Code) to speed up the TurnQuest v4→Caava Evolve v6 migration .",
   },
   {
     role: "FullStack Engineer",
     company: "Dubu Huru Ltd",
     period: "2025 — 2026",
     description:
-      "Led a team of 4 building a high-availability Fintech SaaS platform using Django, React, and Redis. Architected multi-currency payment workflows (M-Pesa, Stripe, PayPal) on AWS ECS Fargate, decoupled async tasks via Celery, and implemented automated GitHub Actions CI/CD pipelines.",
+      "Led a team of 4 building a high-availability Fintech SaaS platform using Django, React, and Redis, applying event-driven design to decouple payment state from user-facing flows. Architected multi-currency payment workflows (M-Pesa, PayStack, PayPal) on AWS ECS Fargate, decoupled async tasks via Celery, and used AI pair-programming alongside automated GitHub Actions CI/CD pipelines to ship faster without sacrificing test coverage.",
   },
   {
     role: "Software Engineer",
     company: "Jambo Pay",
     period: "2024 — 2025",
     description:
-      "Developed a multi-tenant E-Revenue Management System serving 10 Kenyan counties across parking fees, land rates, business permits, unstructured revenue and e-wallets. Migrated legacy monolith modules to REST APIs cutting latency by 30%, implemented PostGIS geospatial tracking, and integrated USSD payment flows.",
+      "Developed a multi-tenant E-Revenue Management System serving 10 Kenyan counties, applying multi-tenancy and data-partitioning principles across various services such as universal billing,public health, parking fees, land rates, business permits, unstructured revenue and e-wallets. Migrated legacy monolith modules(MVT) to REST APIs cutting latency by 30%, implemented PostGIS geospatial tracking, integrated USSD payment flows, and used AI-assisted review to de-risk refactors under production load.",
   },
   {
     role: "Software Developer Intern",
     company: "Jambo Pay",
     period: "2023",
     description:
-      "Developed backend Python/Django REST Framework projects assigned by executive engineering leadership, collaborating across teams to deliver functional prototypes and core feature assignments.",
+      "Developed backend Python/Django REST Framework projects assigned by executive engineering leadership, learning foundational system-design and API-design practices while collaborating across teams to deliver functional prototypes and core feature assignments.",
   },
+  
+];
+
+const CERTIFICATIONS = [
+  { name: "Kubernetes and Cloud Native Associate", issuer: "CNCF" },
+  { name: "CCNA: Introduction to Networks", issuer: "Cisco Networking Academy" },
+  { name: "AWS DevOps Getting Started", issuer: "AWS Training & Certification" },
+  { name: "AWS re/start Graduate", issuer: "AWS" },
+  { name: "Claude Code in Action", issuer: "Anthropic" },
 ];
 
 function Nav() {
@@ -401,9 +410,26 @@ function Experience() {
             </div>
           ))}
 
+          <div className="border-t border-white/5 pt-8 mb-8">
+            <p className="font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] mb-4">
+              Certifications
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {CERTIFICATIONS.map((cert) => (
+                <span
+                  key={cert.name}
+                  className="font-mono text-xs px-3 py-1.5 border border-white/8 text-[var(--muted-foreground)]"
+                  title={cert.issuer}
+                >
+                  {cert.name}
+                </span>
+              ))}
+            </div>
+          </div>
+
           <div className="border-t border-white/5 pt-8">
             <a
-              href="/resume.pdf"
+              href="/johnmburu.cv.pdf"
               className="inline-flex items-center gap-3 font-mono text-xs tracking-widest uppercase text-[var(--primary)] hover:gap-4 transition-all duration-200"
             >
               Download full resume
@@ -460,14 +486,27 @@ function Contact() {
             </button>
           </div>
 
+          <div>
+            <p className="font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] mb-3">
+              WhatsApp
+            </p>
+            <a href="https://wa.me/254768171426" target="_blank" rel="noopener noreferrer" className="font-display text-xl md:text-2xl font-light hover:text-[var(--primary)] transition-colors duration-200 flex items-center gap-3 group">
+              +254 768 171 426
+              <span className="font-mono text-xs text-[var(--muted-foreground)] group-hover:text-[var(--primary)] transition-colors">
+                Message me
+              </span>
+            </a>
+          </div>
+          
+
           <div className="border-t border-white/5 pt-6">
             <p className="font-mono text-xs tracking-widest uppercase text-[var(--muted-foreground)] mb-4">
               Elsewhere
             </p>
             <div className="flex gap-6">
               {[
-                { label: "GitHub", href: "https://github.com/mburunkonge" },
-                { label: "LinkedIn", href: "https://linkedin.com/in/mburunkonge" },
+                { label: "GitHub", href: "https://github.com/JohnMartin-19/" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/john-m-015922206/" },
               ].map((link) => (
                 <a
                   key={link.label}
@@ -481,8 +520,9 @@ function Contact() {
               ))}
             </div>
           </div>
+          </div>
         </div>
-      </div>
+      
     </section>
   );
 }
